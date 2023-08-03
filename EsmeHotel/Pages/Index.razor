@@ -1,0 +1,77 @@
+﻿@page "/home"
+
+<PageTitle>Ana Sayfa</PageTitle>
+
+<h1>Oda Doluluk Durumu</h1>
+<div class="grid">
+    <div class="box"> 
+        <MudText Class="pa">101</MudText></div>
+    <div class="box">
+        <MudText Class="pa">102</MudText>
+    </div>
+    <div class="box">
+        <MudText Class="pa">103</MudText>
+    </div>
+    <div class="box">
+        <MudText Class="pa">104</MudText>
+    </div>
+    <div class="box">
+        <MudText Class="pa">105</MudText>
+    </div>
+    <div class="box">
+        <MudText Class="pa">201</MudText>
+    </div>
+    <div class="box">
+        <MudText Class="pa">202</MudText>
+    </div>
+    <div class="box">
+        <MudText Class="pa">203</MudText>
+    </div>
+    <div class="box">
+        <MudText Class="pa">204</MudText>
+    </div>
+    <div class="box">
+        <MudText Class="pa">205</MudText>
+    </div>
+    <div class="box">
+        <MudText Class="pa">301</MudText>
+    </div>
+    <div class="box">
+        <MudText Class="pa">302</MudText>
+    </div>
+    <div class="box">
+        <MudText Class="pa">303</MudText>
+    </div>
+    <div class="box">
+        <MudText Class="pa">304</MudText>
+    </div>
+    <div class="box">
+        <MudText Class="pa">305</MudText>
+    </div>
+</div>
+
+<style>
+    body {       
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    .pa{
+        font-size:20px;
+        font-weight:bolder;
+        margin:15px 15px;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 30px;
+    }
+
+    .box {
+        height: 200px;
+        background-color: none;
+        border: 1px solid #000;
+    }
+</style>

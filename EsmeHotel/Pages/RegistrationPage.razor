@@ -1,0 +1,97 @@
+﻿@page "/registration"
+@layout LoginLayout
+@using System.ComponentModel.DataAnnotations
+@inject NavigationManager NavManager
+
+<h5 style="margin-left:48%;font-weight:bold;color:white;font-size:32px;margin-top:5px">KAYIT OL</h5>
+
+<div class="card">
+
+    <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator />
+        <MudGrid>
+            <div class="mud-card-content">
+                <MudItem xs="12" sm="7">
+                    <MudCard Class="pa-4" style="margin-left:30%">
+                        <MudCardContent>
+                            <MudText Class="pa">Kullanıcı Adı</MudText>
+                            <MudTextField Style="background-color:#a8a29e;border-radius:8px;"
+                            @bind-Value="model.Username" For="@(() => model.Username)" />
+                            <br />
+                            <MudText Class="pa">Email</MudText>
+                            <MudTextField Class="mt-3" Style="background-color:#a8a29e;border-radius:8px"
+                            @bind-Value="model.Email" For="@(() => model.Email)" />
+                            <br />
+                            <MudText Class="pa">Personel Kodu</MudText>
+                            <MudTextField Class="mt-3" Style="background-color:#a8a29e;border-radius:8px"
+                            @bind-Value="model.PersonelCode" For="@(() => model.PersonelCode)" />
+                            <br />
+                            <MudText Class="pa">Şifre</MudText>
+                            <MudTextField Class="mt-3" Style="background-color:#a8a29e;border-radius:8px"
+                            @bind-Value="model.Password" For="@(() => model.Password)" InputType="InputType.Password" />
+
+                        </MudCardContent>
+                        <MudButton OnClick="@Navigate" Style="font-size:12px;text-decoration:underline;color:darkblue;text-transform:capitalize;">Hesabın varsa giriş yapmak için tıkla </MudButton>
+
+                        <MudCardActions>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Success" Class="ml-auto" Style="padding:5px">Kayıt Ol</MudButton>
+                        </MudCardActions>
+                    </MudCard>
+                </MudItem>
+            </div>
+        </MudGrid>
+    </EditForm>
+</div>
+
+<style>
+    body {
+        background-image: url("../images/background.jpg");
+        padding-top: 120px;
+        padding-bottom: 40px;
+        background-size: cover;
+        font-family: Montserrat;
+    }
+</style>
+@code {
+    RegisterAccountForm model = new RegisterAccountForm();
+    bool success;
+
+    public class RegisterAccountForm
+    {
+        [Required]
+        [StringLength(8, ErrorMessage = "Name length can't be more than 8.")]
+        public string Username { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        [StringLength(30, ErrorMessage = "Password must be at least 5 characters long.", MinimumLength = 5)]
+        public string Password { get; set; }
+
+
+        [Required]
+        [Compare(nameof(PersonelCode))]
+        public string PersonelCode { get; set; }
+
+    }
+    private void Navigate()
+    {
+        try
+        {
+            NavManager.NavigateTo("/");
+        }
+        catch (Exception ex)
+        {
+            string a = ex.Message;
+        }
+    }
+    private void OnValidSubmit(EditContext context)
+    {
+        success = true;
+        StateHasChanged();
+        NavManager.NavigateTo("/home");
+    }
+
+}

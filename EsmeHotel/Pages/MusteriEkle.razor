@@ -1,0 +1,336 @@
+﻿@page "/MusteriEkle"
+
+
+<h5 style="float:right;right:270px;position:relative">Odalar</h5>
+<div class="grid">
+
+    <div class="box" @onclick="@SelectRoom1">
+        <MudText Class="pa" @bind-Value="@oda1" >101</MudText>
+    </div>
+    <div class="box" @onclick="@SelectRoom2">
+        <MudText Class="pa" @bind-Value="@oda2" >102</MudText>
+    </div>
+    <div class="box" @onclick="@SelectRoom3">
+        
+        <MudText Class="pa" @bind-Value="@oda3"> 103</MudText>
+    </div>
+    <div class="box" @onclick="@SelectRoom4">
+        <MudText Class="pa" @bind-Value="@oda4" >104</MudText>
+    </div>
+    <div class="box" @onclick="@SelectRoom5">
+        <MudText Class="pa" @bind-Value="@oda5">105</MudText>
+    </div>
+    <div class="box" @onclick="@SelectRoom6">
+        <MudText Class="pa" @bind-Value="@oda6" >201</MudText>
+    </div>
+    <div class="box" @onclick="@SelectRoom7">
+        <MudText Class="pa" @bind-Value="@oda7">202</MudText>
+    </div>
+    <div class="box" @onclick="@SelectRoom8">
+        <MudText Class="pa" @bind-Value="@oda8" >203</MudText>
+    </div>
+    <div class="box" @onclick="@SelectRoom9">
+        <MudText Class="pa" @bind-Value="@oda9" >204</MudText>
+    </div>
+    <div class="box" @onclick="@SelectRoom10">
+        <MudText Class="pa" @bind-Value="@oda10">205</MudText>
+    </div>
+    <div class="box" @onclick="@SelectRoom11">
+        <MudText Class="pa" @bind-Value="@oda11" >301</MudText>
+    </div>
+    <div class="box" @onclick="@SelectRoom12">
+        <MudText Class="pa" @bind-Value="@oda12" >302</MudText>
+    </div>
+    <div class="box" @onclick="@SelectRoom13">
+        <MudText Class="pa" @bind-Value="@oda13">303</MudText>
+    </div>
+    <div class="box" @onclick="@SelectRoom14">
+        <MudText Class="pa" @bind-Value="@oda14" >304</MudText>
+    </div>
+    <div class="box" @onclick="@SelectRoom15">
+        <MudText Class="pa" @bind-Value="@oda15" >305</MudText>
+    </div>
+</div>
+<h5 style="float:left;position:relative">Müşteri Bilgileri</h5>
+<div class="mud-card ">
+<MudCard>
+    <MudForm Model="@model" @ref="@form" Validation="@(ValidateValue)" ValidationDelay="0">
+        <MudCardContent>
+             <MudText Class="pa">Adı</MudText>
+            <MudTextField @bind-Value="Name"
+                          Variant="Variant.Filled"
+                          Margin="Margin.Dense" />
+                          <br />
+                <MudText Class="pa">Soyadı</MudText>
+            <MudTextField @bind-Value="LastName"
+                          Variant="Variant.Filled"
+                          Margin="Margin.Dense"/>
+                <br />
+                <MudText Class="pa">TC Numarası</MudText>
+                <MudTextField @bind-Value="IdentityNumber"
+                              MaxLength="11"
+                              Variant="Variant.Filled"
+                              Margin="Margin.Dense" />
+
+                <br />
+                <MudText Class="pa">Cinsiyet</MudText>
+                <MudSelect T="string" Variant="Variant.Filled" AnchorOrigin="Origin.BottomCenter">
+                    <MudSelectItem  Value="@("Kadın")" />
+                    <MudSelectItem Value="@("Erkek")" />
+                   
+                </MudSelect>
+                <br />
+
+                <MudText Class="pa">Telefon</MudText>
+            <MudTextField @bind-Value="PhoneNumber"
+                           Variant="Variant.Filled"
+                           Margin="Margin.Dense"/>
+                <br />
+                <MudText Class="pa">Email</MudText>
+            <MudTextField @bind-Value="Email"
+                          Variant="Variant.Filled"
+                          Margin="Margin.Dense"/>
+                <br />
+               
+                <MudText Class="pa">Oda Numarası</MudText>
+                <MudTextField 
+                @bind-Value="selectedNumber"
+                          Variant="Variant.Filled"
+                          Disabled=true
+                          Margin="Margin.Dense" />
+               
+                <br />
+                <MudText Class="pa">Giriş Tarihi</MudText>
+                <MudDatePicker Variant="Variant.Filled"
+                               Margin="Margin.Dense" 
+                               @bind-Date="EntryDate"/>
+                <br />
+                <MudText Class="pa">Çıkış Tarihi</MudText>
+                <MudDatePicker Variant="Variant.Filled"
+                               Margin="Margin.Dense" 
+                               @bind-Date="ReleaseDate" />
+                <br />
+                <MudText Class="pa">Ücret</MudText>
+                <MudTextField @bind-Value="Salary"
+                              Variant="Variant.Filled"
+                              Margin="Margin.Dense"
+                              Adornment="Adornment.End"
+                              AdornmentText="₺"
+                              @onclick="@CalculateSalary"/>
+
+                
+            </MudCardContent>
+        
+    </MudForm>
+    <MudCardActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="@(async () => await Submit())">Kaydet</MudButton>
+    </MudCardActions>
+</MudCard>
+</div>
+
+@code{
+    #region variables
+    string oda1="101";
+    string oda2="102";
+    string oda3="103";
+    string oda4="104";
+    string oda5="105";
+    string oda6="201";
+    string oda7="202";
+    string oda8="203";
+    string oda9="204";
+    string oda10="205";
+    string oda11="301";
+    string oda12="302";
+    string oda13="303";
+    string oda14="304";
+    string oda15="305";
+    string selectedNumber = "";
+    int Salary;
+    string Name;
+    string LastName;
+    string Email;
+    string IdentityNumber;
+    string PhoneNumber;
+    private DateTime? EntryDate;
+    private DateTime? ReleaseDate;
+    private string _result;
+    #endregion
+
+    #region selectedRooms
+    private void SelectRoom1()
+    {
+        selectedNumber = oda1;
+    }
+    private void SelectRoom2()
+    {
+        selectedNumber = oda2;
+    }
+    private void SelectRoom3()
+    {
+        selectedNumber = oda3;
+    }
+    private void SelectRoom4()
+    {
+        selectedNumber = oda4;
+    }
+    private void SelectRoom5()
+    {
+        selectedNumber = oda5;
+    }
+    private void SelectRoom6()
+    {
+        selectedNumber = oda6;
+    }
+    private void SelectRoom7()
+    {
+        selectedNumber = oda7;
+    }
+    private void SelectRoom8()
+    {
+        selectedNumber = oda8;
+    }
+    private void SelectRoom9()
+    {
+        selectedNumber = oda9;
+    }
+    private void SelectRoom10()
+    {
+        selectedNumber = oda10;
+    }
+    private void SelectRoom11()
+    {
+        selectedNumber = oda11;
+    } 
+    private void SelectRoom12()
+    {
+        selectedNumber = oda12;
+    }
+    private void SelectRoom13()
+    {
+        selectedNumber = oda13;
+    }
+    private void SelectRoom14()
+    {
+        selectedNumber = oda14;
+    }
+    private void SelectRoom15()
+    {
+        selectedNumber = oda15;
+    }
+    #endregion
+    
+    private void CalculateSalary()
+    {
+       
+        
+        if (EntryDate.HasValue && ReleaseDate.HasValue)
+        {
+            var difference = (ReleaseDate.Value - EntryDate.Value).Days;
+            var result = difference * 500;
+
+            Salary = result;
+        }
+        else
+        {
+            _result = "Please select both dates.";
+        }
+    }
+}
+@code {
+
+
+    
+
+    MudForm form;
+
+    OrderModel model = new OrderModel();
+    public string ValidateValue;
+    public class OrderModel
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string CCNumber { get; set; } 
+        public AddressModel Address { get; set; } = new AddressModel();
+       
+    }
+
+    public class AddressModel
+    {
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
+    }
+
+    public class OrderDetailsModel
+    {
+        public string Description { get; set; }
+        public decimal Offer { get; set; }
+    }
+
+    private async Task Submit()
+    {
+        await form.Validate();
+
+        if (form.IsValid)
+        {
+            
+        }
+    }
+
+    /// <summary>
+    /// A standard AbstractValidator which contains multiple rules and can be shared with the back end API
+    /// </summary>
+    /// <typeparam name="OrderModel"></typeparam>
+    
+}
+
+<style>
+    body {
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .pa {
+        font-size: 20px;
+        font-weight: bolder;
+        margin: 15px 15px;
+        
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        padding: 5px;
+        border: 1px solid;
+        width: 400px;
+        height: 650px;
+        float:right;
+        margin-top:30px;
+       
+    }
+
+    .mud-card {
+       float:left;
+       width:500px;
+       height:auto;
+        margin-top: 20px;
+        position:relative;
+        left: -68px;
+    }
+
+    .grid > div {
+        background-color: lawngreen;
+        height: 120px;
+        width: 120px;
+        border: 1px solid #000;
+        cursor: pointer;
+        text-align: center;
+        padding: 20px 0;
+        font-size: 30px;
+    }
+   
+</style>

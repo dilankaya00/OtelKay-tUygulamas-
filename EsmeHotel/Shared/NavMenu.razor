@@ -1,0 +1,54 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">Eşme Hotel</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/home" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Ana Sayfa
+                </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="MusteriEkle">
+                <MudIcon Icon="@Icons.Material.Filled.PersonAddAlt1"> </MudIcon>
+                <span aria-hidden="true"></span>&nbsp; Yeni Müşteri Ekle
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="Odalar">
+                <MudIcon Icon="@Icons.Material.Filled.BedroomParent"> </MudIcon>             
+                <span aria-hidden="true"></span>&nbsp; Odalar
+
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="GelirGider">
+                <MudIcon Icon="@Icons.Material.Filled.LocalAtm"> </MudIcon>
+                <span aria-hidden="true"></span>&nbsp; Gelir Gider
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="MusteriBilgileri">
+                <MudIcon Icon="@Icons.Material.Filled.Groups3"> </MudIcon>
+                <span aria-hidden="true"></span>&nbsp; Müşteri Bilgileri
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
